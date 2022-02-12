@@ -1,133 +1,114 @@
-import React, { Component } from 'react';
-import { TextInput, Alert, LayoutAnimation, StyleSheet, View, Text, ScrollView, UIManager, TouchableOpacity, Platform, Image } from 'react-native';
-import Expandable_ListView from '../../component/Expandable_ListView'
 
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    ImageBackground,
+    Image, FlatList, Alert
 
-export default class App extends Component {
+} from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
+import styles from './styles';
+import { imagePath } from '../../config'
+import { ListItem, SearchInput } from '../../component';
+import { getBlockPhone } from '../../reduxStore/action'
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import URLS from '../../api';
+import SQLite from 'react-native-sqlite-storage';
+const db = SQLite.openDatabase('Unb_database.db', '1.0', '', 1)
 
-    constructor() {
-        super();
+export default function App() {
 
-        if (Platform.OS === 'android') {
-
-            UIManager.setLayoutAnimationEnabledExperimental(true)
-
-        }
-
-        this.state = { text: '', AccordionData: [], oldData: [] }
-        this.getData();
-    }
-    getData = () => {
-        fetch('https://api.jsonbin.io/b/60e7f4ebf72d2b70bbac2970')
-            .then((response) => response.json())
-            .then((json) => {
-                console.log(json.data)
-                this.setState({
-                    AccordionData:json.data,
-                    oldData:json.data
-                })
-            })
-            .catch((error) => console.error(error))
-
-    }
-
-
-    update_Layout = (index) => {
-
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-
-        const array = [...this.state.oldData];
-       
-        if(array[index]['expanded'] == undefined)
-        {
-            array[index]['expanded'] = true;
-
-        }else{
-            array[index]['expanded'] = false;
-        }
-       
-
-        this.setState(() => {
-            return {
-                AccordionData: array
+    const dispatch = useDispatch();
+    const [number, setnumber] = useState([]);
+    useEffect(() => {
+        
+        NetInfo.fetch().then(state => {
+          
+            if (state.isConnected) {
+                dispatch(getBlockPhone(URLS.main_url, handleCallback));
+            } else {
+                createTable()
             }
+
         });
-    }
 
-    SearchFilterFunction(text) {
 
-        if (text == "") {
-            this.setState({
-                AccordionData: this.state.oldData,
-                text: text
+
+    }, []);
+
+
+
+    const handleCallback = (response) => {
+        console.log(">>>>>>",response)
+        setnumber(response)
+        uploadData(response)
+    };
+    const createTable = () => {
+
+        db.transaction(function (txn) {
+            txn.executeSql('SELECT * FROM `User_number`', [], function (tx, res) {
+                for (let i = 0; i < res.rows.length; ++i) {
+                    setnumber(JSON.parse(res.rows.item(i).item))
+                }
             })
-        } else {
-            const newData = this.state.AccordionData.filter(function (item) {
-                const itemData = item.title.toUpperCase()
-                const textData = text.toUpperCase()
-                console.log(">>>>>>>>",itemData.indexOf(textData))
-                return itemData.indexOf(textData) > -1
-            })
-            this.setState({
-                AccordionData: newData,
-                text: text
-            })
-        }
+        })
 
-    }
-    render() {
-        return (
-            <View style={styles.MainContainer}>
 
-                <ScrollView contentContainerStyle={{ paddingHorizontal: 10, paddingVertical: 5 }}>
+    };
 
-                    <Text style={styles.heading}>Approved Foods List</Text>
-                    <View style={styles.searchView}>
-                        <TextInput
-                            style={{
-                                width: '100%', height: '100%', padding: 10
-                            }}
-                            onChangeText={(text) => this.SearchFilterFunction(text)}
-                            value={this.state.text}
-                            underlineColorAndroid='transparent'
-                            placeholder="Try searching fat, sauces names..."
-                        />
-                    </View>
-                    {
-                        this.state.AccordionData.map((item, key) =>
-                        (
-                            <Expandable_ListView key={item.title} onClickFunction={this.update_Layout.bind(this, key)} item={item} />
-                        ))
-                    }
-                </ScrollView>
+    const uploadData = (item) => {
+        db.transaction(function (txn) {
+            txn.executeSql('DROP TABLE IF EXISTS User_number', [])
+            txn.executeSql(
+                'CREATE TABLE IF NOT EXISTS User_number(number_id INTEGER PRIMARY KEY NOT NULL, item VARCHAR(255))',
+                []
+            )
+            txn.executeSql('INSERT INTO User_number (item) VALUES (:item)', [JSON.stringify(item)])
+        })
 
-            </View>
-        );
-    }
+
+    };
+
+
+    return (
+
+        <View style={styles.contain}>
+            <ImageBackground style={styles.background}>
+                <View style={styles.viewGraph}>
+                    <Image style={{ width: 60, height: 60 }} resizeMode='contain' source={imagePath.headerIcon} />
+
+                </View>
+                <View style={styles.viewGraphtwo}>
+                    <Text style={styles.welcomeText}>Welcome, Alex</Text>
+                    <Text style={styles.heading}>Search any number you want to block</Text>
+                    <SearchInput
+
+                        heading={false}
+                        imagepath={imagePath.Searchicon}
+                        onChangeText={email => {
+                        }}
+                        placeholder="Enter number"
+
+                    />
+                    <FlatList
+                        data={number}
+                        renderItem={({ item }) => <ListItem
+                            phone={item.country_code + " " + item.mobile_number}
+                            blockCount={item.total_count}
+                            imagepath={imagePath.redphoneicon}
+                        />}
+                    />
+
+
+                </View>
+            </ImageBackground>
+        </View>
+
+    );
+
 }
 
-const styles = StyleSheet.create({
-
-    MainContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-        backgroundColor: '#eae8f0',
-    },
-    heading: {
-        color: 'black',
-        fontSize: 25,
-        fontWeight: '600'
-    },
-    searchView: {
-        width: '100%',
-        height: 60,
-        backgroundColor: '#eff5fa',
-        marginTop: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 5
-    }
 
 
-});

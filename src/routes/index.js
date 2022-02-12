@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 const { Navigator, Screen } = createStackNavigator();
 import Main from '../pages/Main'
-import Profile from '../pages/Splash_Screen';
+import Login from '../pages/Login';
 
 
 export default class MainRouter extends React.Component {
@@ -14,8 +14,11 @@ export default class MainRouter extends React.Component {
             <>
                 <NavigationContainer independent>
                     <Navigator screenOptions={{ headerShown: false }}>
-                        <Screen name="Profile" component={Profile} />
+                        <Screen name="Login" component={Login} />
                         <Screen name="Main" component={Main} />
+
+
+
 
                     </Navigator>
                 </NavigationContainer>

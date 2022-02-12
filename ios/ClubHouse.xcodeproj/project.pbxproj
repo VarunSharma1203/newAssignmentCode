@@ -45,7 +45,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ClubHouseTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ClubHouseTests.m; sourceTree = "<group>"; };
 		10BA3D3F623DCBD95427F161 /* Pods-ClubHouse-ClubHouseTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ClubHouse-ClubHouseTests.debug.xcconfig"; path = "Target Support Files/Pods-ClubHouse-ClubHouseTests/Pods-ClubHouse-ClubHouseTests.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* ClubHouse.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClubHouse.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* UNB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UNB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ClubHouse/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ClubHouse/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -161,7 +161,6 @@
 				99B9C57668B7056300DB83C4 /* Pods-ClubHouse-tvOSTests.debug.xcconfig */,
 				E0EE80CFC701133B438ABF46 /* Pods-ClubHouse-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -190,7 +189,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* ClubHouse.app */,
+				13B07F961A680F5B00A75B9A /* UNB.app */,
 				00E356EE1AD99517003FC87E /* ClubHouseTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* ClubHouse-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* ClubHouse-tvOSTests.xctest */,
@@ -239,7 +238,7 @@
 			);
 			name = ClubHouse;
 			productName = ClubHouse;
-			productReference = 13B07F961A680F5B00A75B9A /* ClubHouse.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* UNB.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* ClubHouse-tvOS */ = {
@@ -689,7 +688,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = ClubHouse;
+				PRODUCT_NAME = UNB;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -711,7 +710,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = ClubHouse;
+				PRODUCT_NAME = UNB;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
