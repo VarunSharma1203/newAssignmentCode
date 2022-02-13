@@ -18,17 +18,19 @@ import React, { useEffect, useState } from 'react';
 import { useFocusEffect, useNavigation } from '@react-navigation/core';
 import URLS from '../../api';
 import { set } from 'react-native-reanimated';
+import { navigate } from '../../../RootNavigation';
 
 export default function App() {
-    const navigation = useNavigation();
+    
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     useEffect(async () => {
+      
         const id = await getStorage('id');
         if (id != null) {
-            navigation.navigate('Main')
+          navigate('Main')
         }
 
 
@@ -56,7 +58,7 @@ export default function App() {
         console.log("handleCallback", response.id)
         if (response.id) {
             setStorage('id',response.id),
-            navigation.navigate('Main')
+           navigate('Main')
         }
 
     };
@@ -98,8 +100,8 @@ export default function App() {
                         <Button
                             disabled={true}
                             onPress={() => {
-                                // navigation.navigate('Main')
-                                login()
+                                
+                             login()
                             }}
                             textStyle={{ color: '#fff', fontSize: 18, fontWeight: 'bold' }}
                             title={'LOG IN'}
