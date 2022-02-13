@@ -41,7 +41,7 @@ export default function App() {
 
 
     const handleCallback = (response) => {
-        console.log(">>>>>>",response)
+
         setnumber(response)
         uploadData(response)
     };

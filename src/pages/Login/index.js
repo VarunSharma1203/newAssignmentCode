@@ -55,7 +55,7 @@ export default function App() {
     }
 
     const handleCallback = (response) => {
-        console.log("handleCallback", response.id)
+       
         if (response.id) {
             setStorage('id',response.id),
            navigate('Main')
