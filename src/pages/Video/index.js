@@ -350,8 +350,7 @@ export default function App() {
                         //some headers ..
                     })
                     .then((res) => {
-                        // the path should be dirs.DocumentDir + 'path-to-file.anything'
-                        console.log('The file saved to ', res.path())
+                    
                         setload(false)
                         Read(item.title)
                     }).catch((e) => {
@@ -380,7 +379,6 @@ export default function App() {
                 } else {
 
                     selectTitles.push(item)
-                    console.log(">>>>>>>>>>", selectTitles)
                     setselectTitle(selectTitles)
 
                 }
@@ -399,12 +397,7 @@ export default function App() {
 
         RNFetchBlob.fs.exists(dirs).then((isDir) => {
             if (isDir) {
-
-                // clone state
-                console.log(">>>>>>>>>>", item)
-
                 selectTitles.push(item)
-                console.log(">>>>>>>>>>", selectTitles)
                 setselectTitle(selectTitles)
 
 
@@ -473,7 +466,6 @@ export default function App() {
                                             if (selectTitle.includes(item.title)) {
                                                 setPlay(true)
                                                 let dirs = RNFetchBlob.fs.dirs.DocumentDir + '/videoDatas/' + item.title + '.mp4'
-                                                console.log(dirs)
                                                 setselectitem(dirs)
                                             } else {
                                                 if (CheckFilePermissions(Platform.OS)) {
